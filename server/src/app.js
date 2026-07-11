@@ -1,0 +1,27 @@
+const express = require("express");
+const cors = require("cors");
+
+const healthRoutes = require("./routes/health.routes");
+const productRoutes = require("./routes/product.routes");
+const notFoundMiddleware = require("./middlewares/notFound.middleware");
+const errorMiddleware = require("./middlewares/error.middleware");
+
+const app = express();
+
+app.use(
+  cors({
+    origin: process.env.CLIENT_URL || "http://localhost:5173",
+    credentials: true
+  })
+);
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+app.use("/api/health", healthRoutes);
+app.use("/api/products", productRoutes);
+
+app.use(notFoundMiddleware);
+app.use(errorMiddleware);
+
+module.exports = app;
