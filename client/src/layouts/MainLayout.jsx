@@ -6,7 +6,7 @@ function MainLayout() {
   return (
     <div className="app-shell app-shell-light">
       <Header />
-      <main>
+      <main className="main-shell">
         <Outlet />
       </main>
       <Footer />

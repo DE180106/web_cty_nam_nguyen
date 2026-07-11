@@ -3,15 +3,15 @@ import api from "../services/api";
 
 const fallbackContent = {
   company: {
-    name: "Công Ty TNHH Công Nghệ Nam Nguyễn",
+    name: "Cong Ty TNHH Cong Nghe Nam Nguyen",
     brand: "NNC",
-    slogan: "Thiết kế website, phần mềm và giải pháp số cho doanh nghiệp Việt",
-    headline: "Tăng tốc hiện diện thương mại của doanh nghiệp bằng website chuyên nghiệp.",
+    slogan: "Thiet ke website, phan mem va giai phap so cho doanh nghiep Viet",
+    headline: "Tang toc hien dien thuong mai cua doanh nghiep bang website chuyen nghiep.",
     description:
-      "NNC cung cấp website giới thiệu doanh nghiệp, landing page bán hàng, hệ thống quản trị nội dung và các giải pháp phần mềm theo nhu cầu thực tế.",
+      "NNC cung cap website gioi thieu doanh nghiep, landing page ban hang, he thong quan tri noi dung va cac giai phap phan mem theo nhu cau thuc te.",
     phone: "0383158080",
     email: "contact@nnc.vn",
-    address: "Số nhà 36, Ngõ 321 Dương Tự Minh, Tổ 26, Phường Quan Triều, Tỉnh Thái Nguyên"
+    address: "So nha 36, Ngo 321 Duong Tu Minh, To 26, Phuong Quan Trieu, Tinh Thai Nguyen"
   },
   services: [],
   projects: [],
@@ -20,48 +20,41 @@ const fallbackContent = {
   stats: []
 };
 
-const workflow = [
-  {
-    step: "01",
-    title: "Tiếp nhận yêu cầu",
-    text: "Lắng nghe mục tiêu kinh doanh, nội dung cần làm và cách khách hàng muốn chuyển đổi."
-  },
-  {
-    step: "02",
-    title: "Thiết kế giao diện",
-    text: "Dựng cấu trúc landing page, bố cục CTA và trải nghiệm phù hợp thương hiệu."
-  },
-  {
-    step: "03",
-    title: "Triển khai & tối ưu",
-    text: "Hoàn thiện code, kết nối dữ liệu và tối ưu tốc độ hiển thị trên mọi thiết bị."
-  }
-];
-
 const featureBullets = [
-  "Website phù hợp doanh nghiệp thương mại và dịch vụ",
-  "Hiển thị tốt trên máy tính, tablet và điện thoại",
-  "Nội dung rõ ràng, CTA nổi bật, dễ chuyển đổi"
+  "Noi dung ro rang, dung tinh than doanh nghiep cong nghe",
+  "Responsive tot tren desktop, tablet va mobile",
+  "CTA, lien he va bao gia de nhin, de thao tac"
 ];
 
-const templateCards = [
+const featureGrid = [
+  "Website doanh nghiep",
+  "Landing page ban hang",
+  "Form lien he",
+  "Responsive",
+  "Noi dung ro rang",
+  "Database MongoDB",
+  "Cau truc de mo rong",
+  "Code de bao tri"
+];
+
+const supportCards = [
   {
-    title: "Corporate Home",
-    text: "Trang giới thiệu doanh nghiệp với bố cục sạch và CTA rõ."
+    title: "Regular Updates",
+    text: "Noi dung va giao dien co the duoc mo rong theo tung giai doan phat trien cua doanh nghiep."
   },
   {
-    title: "Consulting Home",
-    text: "Khối nội dung giải pháp, dịch vụ và uy tín thương hiệu."
+    title: "Knowledge Base",
+    text: "Cau truc code, du lieu va noi dung duoc tach ro de de ban giao va de bao tri."
   },
   {
-    title: "Startup Agency",
-    text: "Tập trung chuyển đổi, phù hợp landing page và chiến dịch quảng cáo."
+    title: "Proficient Support",
+    text: "Tu van theo nhu cau thuc te, uu tien hieu qua trinh bay va kha nang chuyen doi."
   }
 ];
 
 function HomePage() {
   const [content, setContent] = useState(fallbackContent);
-  const [status, setStatus] = useState("Đang tải dữ liệu từ MongoDB...");
+  const [status, setStatus] = useState("Dang tai du lieu tu MongoDB...");
   const [formState, setFormState] = useState({
     fullName: "",
     phoneNumber: "",
@@ -85,11 +78,11 @@ function HomePage() {
         }));
         setFormState((current) => ({
           ...current,
-          serviceInterest: data.services?.[0]?.name || current.serviceInterest || "Website doanh nghiệp"
+          serviceInterest: data.services?.[0]?.name || current.serviceInterest || "Website doanh nghiep"
         }));
-        setStatus("Dữ liệu đã đồng bộ từ database NNC.");
+        setStatus("Du lieu da dong bo tu database NNC.");
       } catch (error) {
-        setStatus("Không tải được dữ liệu từ server, đang hiển thị nội dung dự phòng.");
+        setStatus("Khong tai duoc du lieu tu server, dang hien thi noi dung du phong.");
         console.error(error);
       }
     };
@@ -105,18 +98,13 @@ function HomePage() {
   const stats = content.stats || [];
 
   const serviceOptions = useMemo(() => {
-    if (services.length) {
-      return services.map((service) => service.name);
-    }
-    return ["Website doanh nghiệp", "Landing page bán hàng", "Phần mềm quản lý"];
+    if (services.length) return services.map((service) => service.name);
+    return ["Website doanh nghiep", "Landing page ban hang", "Phan mem quan ly"];
   }, [services]);
 
   useEffect(() => {
     if (!formState.serviceInterest && serviceOptions.length) {
-      setFormState((current) => ({
-        ...current,
-        serviceInterest: serviceOptions[0]
-      }));
+      setFormState((current) => ({ ...current, serviceInterest: serviceOptions[0] }));
     }
   }, [serviceOptions, formState.serviceInterest]);
 
@@ -132,18 +120,18 @@ function HomePage() {
 
     try {
       const response = await api.post("/leads", formState);
-      setFormStatus(response.data.message || "Đã gửi liên hệ thành công.");
+      setFormStatus(response.data.message || "Da gui lien he thanh cong.");
       setFormState({
         fullName: "",
         phoneNumber: "",
         email: "",
         companyName: "",
-        serviceInterest: serviceOptions[0] || "Website doanh nghiệp",
+        serviceInterest: serviceOptions[0] || "Website doanh nghiep",
         message: ""
       });
     } catch (error) {
       setFormStatus(
-        error.response?.data?.message || "Gửi liên hệ thất bại. Vui lòng kiểm tra lại thông tin."
+        error.response?.data?.message || "Gui lien he that bai. Vui long kiem tra lai thong tin."
       );
     } finally {
       setSubmitting(false);
@@ -152,70 +140,73 @@ function HomePage() {
 
   return (
     <div className="finbiz-page">
-      <section className="hero-finbiz">
+      <section className="hero-finbiz" id="tour">
         <div className="hero-bg-shape hero-bg-left" />
         <div className="hero-bg-shape hero-bg-right" />
         <div className="hero-bg-stripe" />
 
-        <div className="hero-inner">
-          <header className="topbar">
-            <div className="brand brand-dark">
-              <strong>{company.brand}</strong>
-              <span>Business Solution</span>
-            </div>
-            <nav className="nav nav-light" aria-label="Điều hướng chính">
-              <a href="#tour" className="is-active">
-                Start Tour
-              </a>
-              <a href="/dich-vu">Demos</a>
-              <a href="/gioi-thieu">Features</a>
-            </nav>
-            <a className="purchase-btn" href="#contact">
-              Purchase Now
+        <div className="hero-copy">
+          <span className="badge-pill">BUSINESS & CONSULTING WEBSITE</span>
+          <h1>{company.headline}</h1>
+          <p className="hero-title-sub">
+            for <em>Your Business</em>
+          </p>
+          <p className="hero-description">{company.description}</p>
+
+          <div className="feature-row">
+            {featureBullets.map((item) => (
+              <span key={item}>{item}</span>
+            ))}
+          </div>
+
+          <div className="hero-actions">
+            <a className="btn btn-primary" href="#services">
+              View Demos
             </a>
-          </header>
-
-          <div className="hero-copy" id="tour">
-            <span className="badge-pill">BUSINESS & CONSULTING TEMPLATE</span>
-            <h1>{company.headline}</h1>
-            <p className="hero-title-sub">
-              for <em>Your Business</em>
-            </p>
-            <p className="hero-description">{company.description}</p>
-
-            <div className="feature-row">
-              {featureBullets.map((item) => (
-                <span key={item}>✓ {item}</span>
-              ))}
-            </div>
-
-            <div className="hero-actions">
-              <a className="btn btn-primary" href="#services">
-                View Demos
-              </a>
-              <a className="btn btn-secondary" href={`tel:${company.phone}`}>
-                Gọi tư vấn
-              </a>
-            </div>
+            <a className="btn btn-secondary" href="#contact">
+              Nhan bao gia
+            </a>
           </div>
         </div>
       </section>
 
       <section className="intro-band">
         <p className="eyebrow eyebrow-center">Great packs of ready-made templates.</p>
-        <h2>Giải pháp thương mại rõ ràng, hiện đại và dễ mở rộng</h2>
+        <h2>Giao dien thuong mai ro rang, sach va dang tin</h2>
         <p>
-          Giao diện ưu tiên sự sáng sủa, nhấn đỏ đậm ở CTA, bố cục thoáng và nội dung bám đúng
-          yêu cầu doanh nghiệp NNC.
+          Chon huong trinh bay phu hop cho website doanh nghiep, nhan manh nang luc,
+          dich vu va thong tin lien he cua NNC.
         </p>
+        <div className="segment-actions">
+          <a className="segment-btn segment-btn-active" href="#services">
+            Multipage Demos
+          </a>
+          <a className="segment-btn" href="#projects">
+            Onepage Demos
+          </a>
+          <a className="segment-btn" href="#features">
+            Core Features
+          </a>
+        </div>
       </section>
 
-      <section className="template-strip">
-        {templateCards.map((item) => (
-          <article key={item.title} className="template-card">
-            <span className="template-dot" />
-            <h3>{item.title}</h3>
-            <p>{item.text}</p>
+      <section className="preview-grid">
+        {services.map((service, index) => (
+          <article key={service.slug} className="preview-card">
+            <div className={`preview-thumb preview-thumb-${(index % 3) + 1}`}>
+              <div className="preview-topbar" />
+              <div className="preview-hero">
+                <span>{service.price}</span>
+                <strong>{service.name}</strong>
+              </div>
+              <div className="preview-lines">
+                <i />
+                <i />
+                <i />
+              </div>
+            </div>
+            <h3>{service.name}</h3>
+            <p>{service.summary}</p>
           </article>
         ))}
       </section>
@@ -229,15 +220,29 @@ function HomePage() {
         ))}
       </section>
 
-      <section className="content-section content-section-light" id="services">
+      <section className="content-section content-section-light" id="features">
         <div className="section-head section-head-center">
-          <p className="eyebrow">Dịch vụ</p>
-          <h2>Dịch vụ bám nhu cầu thương mại</h2>
+          <p className="eyebrow">Core Features</p>
+          <h2>Cac yeu to cot loi cua landing page doanh nghiep</h2>
           <p>
-            Mỗi gói dịch vụ được mô tả rõ để khách hàng hiểu ngay lợi ích, phạm vi và CTA.
+            Noi dung, giao dien va du lieu duoc sap xep de phuc vu muc tieu thuong mai va ban giao.
           </p>
         </div>
+        <div className="feature-tile-grid">
+          {featureGrid.map((item) => (
+            <article key={item} className="feature-tile">
+              <span className="feature-icon" />
+              <h3>{item}</h3>
+            </article>
+          ))}
+        </div>
+      </section>
 
+      <section className="content-section content-section-light" id="services">
+        <div className="section-head section-head-center">
+          <p className="eyebrow">Dich vu</p>
+          <h2>Dich vu bam nhu cau thuong mai</h2>
+        </div>
         <div className="cards-grid cards-grid-light">
           {services.map((service) => (
             <article key={service.slug} className={`service-card ${service.highlight ? "is-hot" : ""}`}>
@@ -246,7 +251,7 @@ function HomePage() {
               <p>{service.summary}</p>
               <ul>
                 {service.benefits.map((benefit) => (
-                  <li key={benefit}>✓ {benefit}</li>
+                  <li key={benefit}>{benefit}</li>
                 ))}
               </ul>
             </article>
@@ -256,27 +261,31 @@ function HomePage() {
 
       <section className="content-section content-section-light two-col">
         <div className="panel-box">
-          <p className="eyebrow">Về NNC</p>
-          <h2>Uy tín, rõ việc, dễ nghiệm thu</h2>
+          <p className="eyebrow">Ve NNC</p>
+          <h2>Uy tin, ro viec, de nghiem thu</h2>
           <p>
-            NNC tập trung vào website có mục tiêu kinh doanh rõ ràng, thể hiện năng lực công ty và
-            tạo cảm giác tin cậy ngay từ màn hình đầu tiên.
+            NNC tap trung vao website co muc tieu kinh doanh ro rang, the hien nang luc cong ty
+            va tao cam giac tin cay ngay tu man hinh dau tien.
           </p>
           <div className="mini-list">
-            <span>Thiết kế sạch, dễ hiểu</span>
-            <span>Chuẩn responsive</span>
-            <span>Tối ưu CTA và form</span>
+            <span>Thiet ke sach</span>
+            <span>Responsive</span>
+            <span>Toi uu CTA</span>
           </div>
         </div>
 
         <div className="panel-box">
-          <p className="eyebrow">Quy trình</p>
+          <p className="eyebrow">Quy trinh</p>
           <div className="workflow-grid">
-            {workflow.map((item) => (
-              <article key={item.step} className="workflow-card">
-                <span>{item.step}</span>
-                <h3>{item.title}</h3>
-                <p>{item.text}</p>
+            {[
+              ["01", "Tiep nhan yeu cau", "Phan tich muc tieu va nhu cau noi dung."],
+              ["02", "Thiet ke giao dien", "Sap xep bo cuc va cac diem nhan chuyen doi."],
+              ["03", "Trien khai", "Ket noi du lieu va toi uu hien thi tren moi thiet bi."]
+            ].map(([step, title, text]) => (
+              <article key={step} className="workflow-card">
+                <span>{step}</span>
+                <h3>{title}</h3>
+                <p>{text}</p>
               </article>
             ))}
           </div>
@@ -285,17 +294,21 @@ function HomePage() {
 
       <section className="content-section content-section-light" id="projects">
         <div className="section-head section-head-center">
-          <p className="eyebrow">Dự án</p>
-          <h2>Dự án mẫu để tham khảo cấu trúc trình bày</h2>
+          <p className="eyebrow">Inner Pages</p>
+          <h2>Cac khoi noi dung co the mo rong trong du an that</h2>
         </div>
-
-        <div className="cards-grid cards-grid-light cards-grid-projects">
-          {projects.map((project) => (
-            <article key={project.name} className="project-card">
-              <span>{project.category}</span>
+        <div className="preview-grid preview-grid-compact">
+          {projects.map((project, index) => (
+            <article key={project.name} className="preview-card">
+              <div className={`preview-thumb preview-thumb-${((index + 1) % 3) + 1}`}>
+                <div className="preview-topbar" />
+                <div className="preview-body-alt">
+                  <strong>{project.category}</strong>
+                  <p>{project.status}</p>
+                </div>
+              </div>
               <h3>{project.name}</h3>
               <p>{project.summary}</p>
-              <strong>{project.status}</strong>
             </article>
           ))}
         </div>
@@ -303,10 +316,9 @@ function HomePage() {
 
       <section className="content-section content-section-light">
         <div className="section-head section-head-center">
-          <p className="eyebrow">Khách hàng nói gì</p>
-          <h2>Niềm tin đến từ trải nghiệm rõ ràng</h2>
+          <p className="eyebrow">Testimonials</p>
+          <h2>Phan hoi giup tang do tin cay</h2>
         </div>
-
         <div className="testimonial-grid">
           {testimonials.map((item) => (
             <blockquote key={item.name} className="testimonial-card">
@@ -322,28 +334,26 @@ function HomePage() {
 
       <section className="content-section content-section-light" id="contact">
         <div className="section-head section-head-center">
-          <p className="eyebrow">Liên hệ</p>
-          <h2>Sẵn sàng tư vấn và nhận báo giá</h2>
+          <p className="eyebrow">Contact</p>
+          <h2>San sang tu van va nhan bao gia</h2>
         </div>
-
         <div className="contact-layout-grid">
-          <div className="contact-panel contact-panel-light">
+          <div className="contact-panel">
             {contacts.map((item) => (
-              <article key={item.label} className="contact-card contact-card-light">
+              <article key={item.label} className="contact-card">
                 <p>{item.label}</p>
                 <strong>{item.value}</strong>
                 <span>{item.note}</span>
               </article>
             ))}
           </div>
-
-          <form className="lead-form lead-form-light" onSubmit={handleSubmit}>
+          <form className="lead-form" onSubmit={handleSubmit}>
             <label>
-              Họ và tên
+              Ho va ten
               <input name="fullName" value={formState.fullName} onChange={handleChange} />
             </label>
             <label>
-              Số điện thoại
+              So dien thoai
               <input name="phoneNumber" value={formState.phoneNumber} onChange={handleChange} />
             </label>
             <label>
@@ -351,11 +361,11 @@ function HomePage() {
               <input name="email" type="email" value={formState.email} onChange={handleChange} />
             </label>
             <label>
-              Tên công ty
+              Ten cong ty
               <input name="companyName" value={formState.companyName} onChange={handleChange} />
             </label>
             <label>
-              Dịch vụ quan tâm
+              Dich vu quan tam
               <select name="serviceInterest" value={formState.serviceInterest} onChange={handleChange}>
                 {serviceOptions.map((option) => (
                   <option key={option} value={option}>
@@ -365,24 +375,34 @@ function HomePage() {
               </select>
             </label>
             <label>
-              Nội dung liên hệ
+              Noi dung lien he
               <textarea name="message" rows="4" value={formState.message} onChange={handleChange} />
             </label>
             <button className="btn btn-primary" type="submit" disabled={submitting}>
-              {submitting ? "Đang gửi..." : "Gửi yêu cầu"}
+              {submitting ? "Dang gui..." : "Gui yeu cau"}
             </button>
             {formStatus ? <p className="form-status">{formStatus}</p> : null}
           </form>
         </div>
       </section>
 
+      <section className="support-strip">
+        {supportCards.map((item, index) => (
+          <article key={item.title} className="support-card">
+            <span className={`support-icon support-icon-${index + 1}`} />
+            <h3>{item.title}</h3>
+            <p>{item.text}</p>
+          </article>
+        ))}
+      </section>
+
       <section className="cta-banner-finbiz">
         <div>
-          <p className="eyebrow">Bắt đầu dự án</p>
-          <h2>Biến website thành kênh bán hàng và giới thiệu thương hiệu.</h2>
+          <p className="eyebrow">Get NNC Now</p>
+          <h2>Bien website thanh kenh ban hang va gioi thieu thuong hieu</h2>
           <p>
-            Nếu bạn cần landing page thương mại rõ ràng, có thể mở rộng thành website doanh
-            nghiệp hoặc hệ thống quản trị sau này, NNC có thể triển khai theo nhu cầu thực tế.
+            Landing page co the mo rong thanh website doanh nghiep hoan chinh, co du lieu,
+            form lien he va cac khoi noi dung phuc vu tu van ban hang.
           </p>
         </div>
         <a className="purchase-btn purchase-btn-large" href={`tel:${company.phone}`}>

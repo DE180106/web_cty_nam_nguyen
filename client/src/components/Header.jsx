@@ -8,13 +8,13 @@ function Header() {
           <strong>NNC</strong>
           <span>Business Solution</span>
         </Link>
-        <nav className="nav nav-light" aria-label="Điều hướng chính">
-          <Link to="/">Start Tour</Link>
-          <Link to="/dich-vu">Demos</Link>
-          <Link to="/gioi-thieu">Features</Link>
-          <a href="#contact">Contact</a>
+        <nav className="nav nav-light" aria-label="Dieu huong chinh">
+          <a href="/#tour">Start Tour</a>
+          <a href="/#services">Demos</a>
+          <a href="/#features">Features</a>
+          <a href="/#contact">Contact</a>
         </nav>
-        <a className="purchase-btn" href="#contact">
+        <a className="purchase-btn" href="/#contact">
           Purchase Now
         </a>
       </div>
