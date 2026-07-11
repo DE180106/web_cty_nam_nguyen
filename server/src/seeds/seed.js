@@ -9,6 +9,8 @@ const Project = require("../models/project");
 const Testimonial = require("../models/testimonial");
 const Contact = require("../models/contact");
 const Stat = require("../models/stat");
+const Product = require("../models/product");
+const sampleProducts = require("../data/sample-products");
 
 const readJson = (fileName) =>
   JSON.parse(fs.readFileSync(path.join(__dirname, "../../../database", fileName), "utf8"));
@@ -37,7 +39,8 @@ const seed = async () => {
     seedCollection(Project, projects),
     seedCollection(Testimonial, testimonials),
     seedCollection(Contact, contacts),
-    seedCollection(Stat, stats)
+    seedCollection(Stat, stats),
+    seedCollection(Product, sampleProducts)
   ]);
 
   console.log("Seed dữ liệu thương mại hoàn tất");

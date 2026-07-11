@@ -2,26 +2,26 @@ function AboutPage() {
   return (
     <div className="page-shell">
       <section className="content-section">
-        <p className="eyebrow">Giới thiệu</p>
-        <h1>Vì sao NNC phù hợp cho website thương mại</h1>
+        <p className="eyebrow">Gioi thieu</p>
+        <h1>Vi sao NNC phu hop cho website doanh nghiep va landing page thuong mai</h1>
         <p className="lead">
-          NNC tập trung vào website có mục tiêu kinh doanh rõ ràng: thể hiện năng lực doanh
-          nghiệp, tăng độ tin cậy và tối ưu chuyển đổi từ khách truy cập thành khách hàng tiềm năng.
+          NNC tap trung vao website co muc tieu kinh doanh ro rang: the hien nang luc cong ty,
+          dich vu, loi ich khach hang nhan duoc va do uy tin can co de chot khach hang tiem nang.
         </p>
       </section>
 
       <section className="cards-grid about-grid">
         <article className="info-card">
-          <h3>Năng lực</h3>
-          <p>Thiết kế web giới thiệu, landing page bán hàng và hệ thống quản trị nội dung.</p>
+          <h3>Nang luc</h3>
+          <p>Thiet ke website gioi thieu, landing page ban hang va he thong quan tri noi dung.</p>
         </article>
         <article className="info-card">
-          <h3>Định hướng</h3>
-          <p>Giao diện sạch, dễ hiểu, đúng tone thương hiệu và có khả năng mở rộng dữ liệu.</p>
+          <h3>Dinh huong</h3>
+          <p>Giao dien sach, de hieu, dung tone thuong hieu va co kha nang mo rong du lieu.</p>
         </article>
         <article className="info-card">
-          <h3>Giá trị</h3>
-          <p>Website hoạt động ổn định, dễ bàn giao, dễ cập nhật và phù hợp triển khai thực tế.</p>
+          <h3>Gia tri</h3>
+          <p>Website hoat dong on dinh, de ban giao, de cap nhat va phu hop trien khai thuc te.</p>
         </article>
       </section>
     </div>

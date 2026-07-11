@@ -1,88 +1,188 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
+import ProductCard from "../components/ProductCard";
 import api from "../services/api";
 
-const fallbackContent = {
-  company: {
-    name: "Cong Ty TNHH Cong Nghe Nam Nguyen",
-    brand: "NNC",
-    slogan: "Thiet ke website, phan mem va giai phap so cho doanh nghiep Viet",
-    headline: "Tang toc hien dien thuong mai cua doanh nghiep bang website chuyen nghiep.",
-    description:
-      "NNC cung cap website gioi thieu doanh nghiep, landing page ban hang, he thong quan tri noi dung va cac giai phap phan mem theo nhu cau thuc te.",
-    phone: "0383158080",
-    email: "contact@nnc.vn",
-    address: "So nha 36, Ngo 321 Duong Tu Minh, To 26, Phuong Quan Trieu, Tinh Thai Nguyen"
-  },
-  services: [],
-  projects: [],
-  testimonials: [],
-  contacts: [],
-  stats: []
+const fallbackCompany = {
+  name: "Nam Nguyen Technology",
+  brand: "NAM NGUYEN",
+  slogan: "Laptop chinh hang, hieu nang cao va giao nhanh toan quoc",
+  headline: "Hieu nang manh me",
+  description:
+    "Chinh hang 100%, tra gop 0%, bao hanh 24 thang. Tu van dung nhu cau va giao nhanh tren toan quoc.",
+  phone: "18006868",
+  email: "sales@namnguyen.vn",
+  address: "123 Nguyen Hue, Quan 1, TP.HCM"
 };
 
-const featureBullets = [
-  "Noi dung ro rang, dung tinh than doanh nghiep cong nghe",
-  "Responsive tot tren desktop, tablet va mobile",
-  "CTA, lien he va bao gia de nhin, de thao tac"
-];
+const trustBadges = ["Hang chinh hang", "Tra gop 0%", "BH 24 thang", "4.9 sao danh gia"];
 
-const featureGrid = [
-  "Website doanh nghiep",
-  "Landing page ban hang",
-  "Form lien he",
-  "Responsive",
-  "Noi dung ro rang",
-  "Database MongoDB",
-  "Cau truc de mo rong",
-  "Code de bao tri"
-];
-
-const supportCards = [
+const serviceHighlights = [
   {
-    title: "Regular Updates",
-    text: "Noi dung va giao dien co the duoc mo rong theo tung giai doan phat trien cua doanh nghiep."
+    title: "Giao hang toan quoc",
+    text: "Giao trong 2h tai TP.HCM va Ha Noi. Toan quoc trong 24-48h."
   },
   {
-    title: "Knowledge Base",
-    text: "Cau truc code, du lieu va noi dung duoc tach ro de de ban giao va de bao tri."
+    title: "Bao hanh chinh hang",
+    text: "Bao hanh 12-36 thang tai trung tam hang, ho tro tan nha."
   },
   {
-    title: "Proficient Support",
-    text: "Tu van theo nhu cau thuc te, uu tien hieu qua trinh bay va kha nang chuyen doi."
+    title: "Doi tra nhanh 30 ngay",
+    text: "Doi tra trong 30 ngay neu loi nha san xuat, khong phat sinh phi."
+  },
+  {
+    title: "Thanh toan an toan",
+    text: "Ho tro tra gop 0% lai suat, thanh toan online ma hoa SSL."
   }
 ];
 
+const categoryCards = [
+  { title: "Gaming", subtitle: "RTX 4070-4090", count: "48 san pham" },
+  { title: "Laptop Van phong", subtitle: "Mong nhe, ben bi", count: "36 san pham" },
+  { title: "Do hoa", subtitle: "Man OLED 4K", count: "22 san pham" },
+  { title: "MacBook", subtitle: "Chip M4 Series", count: "15 san pham" },
+  { title: "Laptop AI", subtitle: "NPU tich hop", count: "18 san pham" },
+  { title: "Phu kien", subtitle: "Chuot, tai nghe", count: "124 san pham" }
+];
+
+const fallbackFeaturedProducts = [
+  {
+    brand: "ASUS",
+    name: "ASUS ROG Strix G16 2024",
+    specs: {
+      cpu: "i9-14900HX",
+      ram: "32GB DDR5",
+      ssd: "1TB NVMe",
+      gpu: "RTX 4080 12GB",
+      display: '16" QHD+ 240Hz'
+    },
+    price: 52990000,
+    oldPrice: 62990000,
+    badge: "HOT",
+    discount: "-16%",
+    reviewCount: 248,
+    image:
+      "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?auto=format&fit=crop&w=1200&q=80"
+  },
+  {
+    brand: "MSI",
+    name: "MSI Raider GE78 HX",
+    specs: {
+      cpu: "i9-14900HX",
+      ram: "64GB DDR5",
+      ssd: "2TB NVMe",
+      gpu: "RTX 4090 16GB",
+      display: '17.3" QHD 240Hz'
+    },
+    price: 79990000,
+    oldPrice: 88990000,
+    badge: "NEW",
+    discount: "-11%",
+    reviewCount: 167,
+    image:
+      "https://images.unsplash.com/photo-1517336714739-489689fd1ca8?auto=format&fit=crop&w=1200&q=80"
+  },
+  {
+    brand: "APPLE",
+    name: 'Apple MacBook Pro 16" M4 Max',
+    specs: {
+      cpu: "M4 Max 16-core",
+      ram: "48GB Unified Memory",
+      ssd: "1TB SSD",
+      gpu: "40-core GPU",
+      display: '16" Liquid Retina XDR'
+    },
+    price: 89990000,
+    oldPrice: 95990000,
+    badge: "PREMIUM",
+    discount: "-6%",
+    reviewCount: 412,
+    image:
+      "https://images.unsplash.com/photo-1517430816045-df4b7de11d1d?auto=format&fit=crop&w=1200&q=80"
+  },
+  {
+    brand: "DELL",
+    name: "Dell XPS 15 9530",
+    specs: {
+      cpu: "i7-13700H",
+      ram: "32GB LPDDR5",
+      ssd: "512GB NVMe",
+      gpu: "RTX 4060 8GB",
+      display: '15.6" OLED 3.5K'
+    },
+    price: 42990000,
+    oldPrice: 51990000,
+    badge: "SALE",
+    discount: "-17%",
+    reviewCount: 189,
+    image:
+      "https://images.unsplash.com/photo-1593642702821-c8da6771f0c6?auto=format&fit=crop&w=1200&q=80"
+  }
+];
+
+const brandLogos = ["MSI", "ACER", "DELL", "HP", "LENOVO", "APPLE", "GIGABYTE", "RAZER", "SAMSUNG", "ASUS"];
+
+const newsItems = [
+  {
+    tag: "TIN TUC",
+    title: "RTX 5090 Laptop: Ky nguyen moi cua laptop gaming cao cap",
+    excerpt: "NVIDIA chinh thuc ra mat dong GPU RTX 5090 danh rieng cho laptop, mang den hieu nang chua tung co...",
+    meta: "08/07/2026  -  5 phut doc",
+    image:
+      "https://images.unsplash.com/photo-1591488320449-011701bb6704?auto=format&fit=crop&w=1200&q=80"
+  },
+  {
+    tag: "REVIEW",
+    title: "Top 10 Laptop Gaming Tot Nhat 2026: Lua chon cho moi ngan sach",
+    excerpt: "Thi truong laptop gaming 2026 ngay cang da dang voi nhieu lua chon hap dan tu phan khuc trung...",
+    meta: "05/07/2026  -  8 phut doc",
+    image:
+      "https://images.unsplash.com/photo-1603481546579-65d935ba9cdd?auto=format&fit=crop&w=1200&q=80"
+  },
+  {
+    tag: "APPLE",
+    title: "Apple M4 Ultra: Chip xu ly manh nhat the gioi cho MacBook Pro",
+    excerpt: "Apple vua ra mat chip M4 Ultra voi hieu nang vuot troi, danh dau buoc nhay vot lon trong lich su Mac...",
+    meta: "02/07/2026  -  6 phut doc",
+    image:
+      "https://images.unsplash.com/photo-1515378960530-7c0da6231fb1?auto=format&fit=crop&w=1200&q=80"
+  }
+];
+
+const footerBenefits = ["Giao hang nhanh", "Bao hanh 24 thang", "Doi tra 30 ngay", "Tra gop 0%"];
+
 function HomePage() {
-  const [content, setContent] = useState(fallbackContent);
-  const [status, setStatus] = useState("Dang tai du lieu tu MongoDB...");
-  const [formState, setFormState] = useState({
-    fullName: "",
-    phoneNumber: "",
-    email: "",
-    companyName: "",
-    serviceInterest: "",
-    message: ""
-  });
-  const [formStatus, setFormStatus] = useState("");
-  const [submitting, setSubmitting] = useState(false);
+  const [company, setCompany] = useState(fallbackCompany);
+  const [featuredProducts, setFeaturedProducts] = useState(fallbackFeaturedProducts);
+  const [newsletterStatus, setNewsletterStatus] = useState("");
 
   useEffect(() => {
     const loadContent = async () => {
       try {
-        const response = await api.get("/site");
-        const data = response.data.data;
-        setContent((current) => ({
-          ...current,
-          ...data,
-          company: data.company || current.company
-        }));
-        setFormState((current) => ({
-          ...current,
-          serviceInterest: data.services?.[0]?.name || current.serviceInterest || "Website doanh nghiep"
-        }));
-        setStatus("Du lieu da dong bo tu database NNC.");
+        const [siteResponse, productResponse] = await Promise.all([
+          api.get("/site"),
+          api.get("/products", {
+            params: {
+              featured: true,
+              limit: 8
+            }
+          })
+        ]);
+
+        const remoteCompany = siteResponse.data?.data?.company;
+        const remoteProducts = productResponse.data?.data || [];
+
+        if (remoteCompany) {
+          setCompany({
+            ...fallbackCompany,
+            ...remoteCompany,
+            brand: "NAM NGUYEN"
+          });
+        }
+
+        if (remoteProducts.length) {
+          setFeaturedProducts(remoteProducts);
+        }
       } catch (error) {
-        setStatus("Khong tai duoc du lieu tu server, dang hien thi noi dung du phong.");
         console.error(error);
       }
     };
@@ -90,327 +190,295 @@ function HomePage() {
     loadContent();
   }, []);
 
-  const company = content.company || fallbackContent.company;
-  const services = content.services || [];
-  const projects = content.projects || [];
-  const testimonials = content.testimonials || [];
-  const contacts = content.contacts || [];
-  const stats = content.stats || [];
-
-  const serviceOptions = useMemo(() => {
-    if (services.length) return services.map((service) => service.name);
-    return ["Website doanh nghiep", "Landing page ban hang", "Phan mem quan ly"];
-  }, [services]);
-
-  useEffect(() => {
-    if (!formState.serviceInterest && serviceOptions.length) {
-      setFormState((current) => ({ ...current, serviceInterest: serviceOptions[0] }));
-    }
-  }, [serviceOptions, formState.serviceInterest]);
-
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-    setFormState((current) => ({ ...current, [name]: value }));
-  };
-
-  const handleSubmit = async (event) => {
+  const handleNewsletterSubmit = (event) => {
     event.preventDefault();
-    setSubmitting(true);
-    setFormStatus("");
-
-    try {
-      const response = await api.post("/leads", formState);
-      setFormStatus(response.data.message || "Da gui lien he thanh cong.");
-      setFormState({
-        fullName: "",
-        phoneNumber: "",
-        email: "",
-        companyName: "",
-        serviceInterest: serviceOptions[0] || "Website doanh nghiep",
-        message: ""
-      });
-    } catch (error) {
-      setFormStatus(
-        error.response?.data?.message || "Gui lien he that bai. Vui long kiem tra lai thong tin."
-      );
-    } finally {
-      setSubmitting(false);
-    }
+    setNewsletterStatus("Da ghi nhan email. Chung toi se gui uu dai som nhat.");
   };
 
   return (
-    <div className="finbiz-page">
-      <section className="hero-finbiz" id="tour">
-        <div className="hero-bg-shape hero-bg-left" />
-        <div className="hero-bg-shape hero-bg-right" />
-        <div className="hero-bg-stripe" />
+    <div className="ecom-page">
+      <section className="hero-ecom">
+        <div className="hero-grid-overlay" />
 
-        <div className="hero-copy">
-          <span className="badge-pill">BUSINESS & CONSULTING WEBSITE</span>
-          <h1>{company.headline}</h1>
-          <p className="hero-title-sub">
-            for <em>Your Business</em>
-          </p>
-          <p className="hero-description">{company.description}</p>
+        <div className="hero-content">
+          <div className="hero-copy-panel">
+            <p className="section-label">Laptop chinh hang</p>
+            <h1>
+              Hieu nang
+              <span>manh me</span>
+            </h1>
+            <p className="hero-description-ecom">{company.description}</p>
 
-          <div className="feature-row">
-            {featureBullets.map((item) => (
-              <span key={item}>{item}</span>
-            ))}
+            <div className="hero-badge-row">
+              {trustBadges.map((item) => (
+                <span key={item} className="hero-chip">
+                  {item}
+                </span>
+              ))}
+            </div>
+
+            <div className="hero-actions-ecom">
+              <a className="ecom-btn ecom-btn-primary" href="#featured-products">
+                Mua ngay
+              </a>
+              <a className="ecom-btn ecom-btn-secondary" href="#categories">
+                Xem san pham
+              </a>
+            </div>
+
+            <div className="hero-stats">
+              <article>
+                <strong>5,000+</strong>
+                <span>San pham</span>
+              </article>
+              <article>
+                <strong>50,000+</strong>
+                <span>Khach hang</span>
+              </article>
+              <article>
+                <strong>3 nam</strong>
+                <span>Kinh nghiem</span>
+              </article>
+            </div>
           </div>
 
-          <div className="hero-actions">
-            <a className="btn btn-primary" href="#services">
-              View Demos
-            </a>
-            <a className="btn btn-secondary" href="#contact">
-              Nhan bao gia
-            </a>
-          </div>
-        </div>
-      </section>
-
-      <section className="intro-band">
-        <p className="eyebrow eyebrow-center">Great packs of ready-made templates.</p>
-        <h2>Giao dien thuong mai ro rang, sach va dang tin</h2>
-        <p>
-          Chon huong trinh bay phu hop cho website doanh nghiep, nhan manh nang luc,
-          dich vu va thong tin lien he cua NNC.
-        </p>
-        <div className="segment-actions">
-          <a className="segment-btn segment-btn-active" href="#services">
-            Multipage Demos
-          </a>
-          <a className="segment-btn" href="#projects">
-            Onepage Demos
-          </a>
-          <a className="segment-btn" href="#features">
-            Core Features
-          </a>
-        </div>
-      </section>
-
-      <section className="preview-grid">
-        {services.map((service, index) => (
-          <article key={service.slug} className="preview-card">
-            <div className={`preview-thumb preview-thumb-${(index % 3) + 1}`}>
-              <div className="preview-topbar" />
-              <div className="preview-hero">
-                <span>{service.price}</span>
-                <strong>{service.name}</strong>
+          <div className="hero-visual">
+            <div className="hero-preview-card">
+              <div className="hero-preview-header">
+                <span>NAM NGUYEN</span>
+                <span>UU dai thang 7</span>
               </div>
-              <div className="preview-lines">
-                <i />
-                <i />
-                <i />
+              <div className="hero-preview-body">
+                <div className="hero-preview-copy">
+                  <p>Laptop cao cap</p>
+                  <h2>Hieu nang vuot troi</h2>
+                  <strong>MacBook Air M4</strong>
+                </div>
+                <img
+                  src="https://images.unsplash.com/photo-1517336714739-489689fd1ca8?auto=format&fit=crop&w=1200&q=80"
+                  alt="Laptop premium"
+                />
+              </div>
+              <div className="hero-floating-chip hero-floating-chip-left">
+                <span>Chip</span>
+                <strong>Intel Core i9</strong>
+                <small>14th Gen HX</small>
+              </div>
+              <div className="hero-floating-chip hero-floating-chip-right">
+                <span>RTX GPU</span>
+                <strong>RTX 4090</strong>
+                <small>16GB GDDR7</small>
+              </div>
+              <div className="hero-sale-bubble">
+                <span>Uu dai</span>
+                <strong>15%</strong>
               </div>
             </div>
-            <h3>{service.name}</h3>
-            <p>{service.summary}</p>
-          </article>
-        ))}
-      </section>
-
-      <section className="stats-strip">
-        {stats.map((item) => (
-          <article key={item.label} className="stat-chip">
-            <strong>{item.value}</strong>
-            <span>{item.label}</span>
-          </article>
-        ))}
-      </section>
-
-      <section className="content-section content-section-light" id="features">
-        <div className="section-head section-head-center">
-          <p className="eyebrow">Core Features</p>
-          <h2>Cac yeu to cot loi cua landing page doanh nghiep</h2>
-          <p>
-            Noi dung, giao dien va du lieu duoc sap xep de phuc vu muc tieu thuong mai va ban giao.
-          </p>
-        </div>
-        <div className="feature-tile-grid">
-          {featureGrid.map((item) => (
-            <article key={item} className="feature-tile">
-              <span className="feature-icon" />
-              <h3>{item}</h3>
-            </article>
-          ))}
-        </div>
-      </section>
-
-      <section className="content-section content-section-light" id="services">
-        <div className="section-head section-head-center">
-          <p className="eyebrow">Dich vu</p>
-          <h2>Dich vu bam nhu cau thuong mai</h2>
-        </div>
-        <div className="cards-grid cards-grid-light">
-          {services.map((service) => (
-            <article key={service.slug} className={`service-card ${service.highlight ? "is-hot" : ""}`}>
-              <p className="card-kicker">{service.price}</p>
-              <h3>{service.name}</h3>
-              <p>{service.summary}</p>
-              <ul>
-                {service.benefits.map((benefit) => (
-                  <li key={benefit}>{benefit}</li>
-                ))}
-              </ul>
-            </article>
-          ))}
-        </div>
-      </section>
-
-      <section className="content-section content-section-light two-col">
-        <div className="panel-box">
-          <p className="eyebrow">Ve NNC</p>
-          <h2>Uy tin, ro viec, de nghiem thu</h2>
-          <p>
-            NNC tap trung vao website co muc tieu kinh doanh ro rang, the hien nang luc cong ty
-            va tao cam giac tin cay ngay tu man hinh dau tien.
-          </p>
-          <div className="mini-list">
-            <span>Thiet ke sach</span>
-            <span>Responsive</span>
-            <span>Toi uu CTA</span>
           </div>
         </div>
 
-        <div className="panel-box">
-          <p className="eyebrow">Quy trinh</p>
-          <div className="workflow-grid">
-            {[
-              ["01", "Tiep nhan yeu cau", "Phan tich muc tieu va nhu cau noi dung."],
-              ["02", "Thiet ke giao dien", "Sap xep bo cuc va cac diem nhan chuyen doi."],
-              ["03", "Trien khai", "Ket noi du lieu va toi uu hien thi tren moi thiet bi."]
-            ].map(([step, title, text]) => (
-              <article key={step} className="workflow-card">
-                <span>{step}</span>
-                <h3>{title}</h3>
-                <p>{text}</p>
-              </article>
+        <div className="hero-bottom-strip">
+          {["San pham chinh hang", "Ho tro ky thuat 24/7", "7 ngay doi tra", "Bao hanh chinh hang"].map((item) => (
+            <span key={item}>{item}</span>
+          ))}
+        </div>
+      </section>
+
+      <section className="service-highlight-grid">
+        {serviceHighlights.map((item) => (
+          <article key={item.title} className="service-highlight-card">
+            <div className="service-highlight-icon" />
+            <div>
+              <h3>{item.title}</h3>
+              <p>{item.text}</p>
+            </div>
+          </article>
+        ))}
+      </section>
+
+      <section className="ecom-section" id="categories">
+        <div className="section-heading">
+          <div>
+            <p className="section-label">Danh muc</p>
+            <h2>Kham pha theo nhu cau</h2>
+          </div>
+          <a className="section-link" href="#featured-products">
+            Xem tat ca
+          </a>
+        </div>
+
+        <div className="category-grid">
+          {categoryCards.map((item) => (
+            <article key={item.title} className="category-card">
+              <div className="category-icon-box" />
+              <div className="category-card-glow" />
+              <h3>{item.title}</h3>
+              <p>{item.subtitle}</p>
+              <span>{item.count}</span>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="ecom-section" id="featured-products">
+        <div className="section-heading">
+          <div>
+            <p className="section-label">Noi bat</p>
+            <h2>San pham noi bat</h2>
+          </div>
+          <div className="filter-tabs">
+            {["Tat ca", "Gaming", "MacBook", "Van phong"].map((item, index) => (
+              <button key={item} className={`filter-tab ${index === 0 ? "is-active" : ""}`} type="button">
+                {item}
+              </button>
             ))}
           </div>
         </div>
-      </section>
 
-      <section className="content-section content-section-light" id="projects">
-        <div className="section-head section-head-center">
-          <p className="eyebrow">Inner Pages</p>
-          <h2>Cac khoi noi dung co the mo rong trong du an that</h2>
-        </div>
-        <div className="preview-grid preview-grid-compact">
-          {projects.map((project, index) => (
-            <article key={project.name} className="preview-card">
-              <div className={`preview-thumb preview-thumb-${((index + 1) % 3) + 1}`}>
-                <div className="preview-topbar" />
-                <div className="preview-body-alt">
-                  <strong>{project.category}</strong>
-                  <p>{project.status}</p>
-                </div>
-              </div>
-              <h3>{project.name}</h3>
-              <p>{project.summary}</p>
-            </article>
+        <div className="product-grid">
+          {featuredProducts.map((product) => (
+            <ProductCard key={product._id || product.slug || product.name} product={product} />
           ))}
         </div>
-      </section>
 
-      <section className="content-section content-section-light">
-        <div className="section-head section-head-center">
-          <p className="eyebrow">Testimonials</p>
-          <h2>Phan hoi giup tang do tin cay</h2>
-        </div>
-        <div className="testimonial-grid">
-          {testimonials.map((item) => (
-            <blockquote key={item.name} className="testimonial-card">
-              <p>{item.quote}</p>
-              <footer>
-                <strong>{item.name}</strong>
-                <span>{item.role}</span>
-              </footer>
-            </blockquote>
-          ))}
+        <div className="center-cta">
+          <a className="outline-cta" href="#newsletter">
+            Xem tat ca san pham
+          </a>
         </div>
       </section>
 
-      <section className="content-section content-section-light" id="contact">
-        <div className="section-head section-head-center">
-          <p className="eyebrow">Contact</p>
-          <h2>San sang tu van va nhan bao gia</h2>
+      <section className="flash-sale-band">
+        <div className="flash-sale-copy">
+          <p className="section-label section-label-light">Uu dai dac biet</p>
+          <h2>FLASH SALE</h2>
+          <p>Giam den 40% tat ca laptop gaming</p>
         </div>
-        <div className="contact-layout-grid">
-          <div className="contact-panel">
-            {contacts.map((item) => (
-              <article key={item.label} className="contact-card">
-                <p>{item.label}</p>
-                <strong>{item.value}</strong>
-                <span>{item.note}</span>
-              </article>
-            ))}
-          </div>
-          <form className="lead-form" onSubmit={handleSubmit}>
-            <label>
-              Ho va ten
-              <input name="fullName" value={formState.fullName} onChange={handleChange} />
-            </label>
-            <label>
-              So dien thoai
-              <input name="phoneNumber" value={formState.phoneNumber} onChange={handleChange} />
-            </label>
-            <label>
-              Email
-              <input name="email" type="email" value={formState.email} onChange={handleChange} />
-            </label>
-            <label>
-              Ten cong ty
-              <input name="companyName" value={formState.companyName} onChange={handleChange} />
-            </label>
-            <label>
-              Dich vu quan tam
-              <select name="serviceInterest" value={formState.serviceInterest} onChange={handleChange}>
-                {serviceOptions.map((option) => (
-                  <option key={option} value={option}>
-                    {option}
-                  </option>
-                ))}
-              </select>
-            </label>
-            <label>
-              Noi dung lien he
-              <textarea name="message" rows="4" value={formState.message} onChange={handleChange} />
-            </label>
-            <button className="btn btn-primary" type="submit" disabled={submitting}>
-              {submitting ? "Dang gui..." : "Gui yeu cau"}
-            </button>
-            {formStatus ? <p className="form-status">{formStatus}</p> : null}
-          </form>
-        </div>
-      </section>
 
-      <section className="support-strip">
-        {supportCards.map((item, index) => (
-          <article key={item.title} className="support-card">
-            <span className={`support-icon support-icon-${index + 1}`} />
-            <h3>{item.title}</h3>
-            <p>{item.text}</p>
-          </article>
-        ))}
-      </section>
-
-      <section className="cta-banner-finbiz">
-        <div>
-          <p className="eyebrow">Get NNC Now</p>
-          <h2>Bien website thanh kenh ban hang va gioi thieu thuong hieu</h2>
-          <p>
-            Landing page co the mo rong thanh website doanh nghiep hoan chinh, co du lieu,
-            form lien he va cac khoi noi dung phuc vu tu van ban hang.
-          </p>
+        <div className="flash-sale-timer">
+          <span>
+            <strong>06</strong>
+            Gio
+          </span>
+          <i>:</i>
+          <span>
+            <strong>23</strong>
+            Phut
+          </span>
+          <i>:</i>
+          <span>
+            <strong>47</strong>
+            Giay
+          </span>
         </div>
-        <a className="purchase-btn purchase-btn-large" href={`tel:${company.phone}`}>
-          Purchase Now
+
+        <a className="flash-sale-btn" href="#featured-products">
+          Xem uu dai ngay
         </a>
       </section>
 
-      <p className="sync-note">{status}</p>
+      <section className="ecom-section brand-section">
+        <p className="section-label section-label-center">Thuong hieu doi tac</p>
+        <div className="brand-grid">
+          {brandLogos.map((brand) => (
+            <article key={brand} className="brand-card">
+              {brand}
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="ecom-section">
+        <div className="section-heading">
+          <div>
+            <p className="section-label">Tin tuc</p>
+            <h2>Tin tuc cong nghe</h2>
+          </div>
+          <a className="section-link" href="#newsletter">
+            Xem tat ca
+          </a>
+        </div>
+
+        <div className="news-grid">
+          {newsItems.map((item) => (
+            <article key={item.title} className="news-card">
+              <div className="news-image-wrap">
+                <span className="news-tag">{item.tag}</span>
+                <img src={item.image} alt={item.title} />
+              </div>
+              <div className="news-card-body">
+                <p className="news-meta">{item.meta}</p>
+                <h3>{item.title}</h3>
+                <p>{item.excerpt}</p>
+                <a href="#newsletter">Doc them</a>
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="testimonial-section">
+        <p className="section-label section-label-center">Danh gia</p>
+        <h2>Khach hang noi gi ve chung toi</h2>
+
+        <div className="testimonial-stats">
+          <article>
+            <strong>50,000+</strong>
+            <span>Khach hang</span>
+          </article>
+          <article>
+            <strong>4.9/5</strong>
+            <span>Danh gia TB</span>
+          </article>
+          <article>
+            <strong>98%</strong>
+            <span>Hai long</span>
+          </article>
+        </div>
+
+        <article className="testimonial-feature-card">
+          <p>
+            "Mua ASUS ROG tai day, giao hang sieu nhanh, may dung hang chinh hang, hieu nang cuc dinh.
+            Rat hai long voi dich vu tu van nhiet tinh."
+          </p>
+          <div className="testimonial-footer">
+            <div>
+              <strong>Nguyen Minh Tuan</strong>
+              <span>Game thu chuyen nghiep</span>
+            </div>
+            <em>ASUS ROG Strix G16</em>
+          </div>
+        </article>
+      </section>
+
+      <section className="newsletter-section" id="newsletter">
+        <div className="hero-grid-overlay" />
+        <div className="newsletter-inner">
+          <p className="section-label section-label-center">Nhan uu dai doc quyen</p>
+          <h2>Nhan uu dai doc quyen</h2>
+          <p>Dang ky nhan ban tin de nhan ma giam gia 10% cho don hang dau tien.</p>
+
+          <form className="newsletter-form" onSubmit={handleNewsletterSubmit}>
+            <input placeholder="Nhap email cua ban..." type="email" />
+            <button className="ecom-btn ecom-btn-primary" type="submit">
+              Dang ky
+            </button>
+          </form>
+          {newsletterStatus ? <p className="newsletter-status">{newsletterStatus}</p> : null}
+        </div>
+      </section>
+
+      <section className="footer-benefits">
+        {footerBenefits.map((item) => (
+          <article key={item} className="footer-benefit-item">
+            <div className="service-highlight-icon" />
+            <div>
+              <h3>{item}</h3>
+              <p>{item === "Giao hang nhanh" ? "2h tai TP.HCM & Ha Noi" : "Dich vu va chinh sach minh bach"}</p>
+            </div>
+          </article>
+        ))}
+      </section>
     </div>
   );
 }

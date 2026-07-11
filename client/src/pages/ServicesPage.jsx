@@ -20,8 +20,8 @@ function ServicesPage() {
   return (
     <div className="page-shell">
       <section className="content-section">
-        <p className="eyebrow">Dịch vụ</p>
-        <h1>Giải pháp web và phần mềm theo nhu cầu thương mại</h1>
+        <p className="eyebrow">Dich vu</p>
+        <h1>Giai phap web va phan mem theo nhu cau thuong mai cua doanh nghiep</h1>
       </section>
 
       <section className="cards-grid">
