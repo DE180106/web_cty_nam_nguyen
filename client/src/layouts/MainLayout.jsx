@@ -4,13 +4,13 @@ import Footer from "../components/Footer";
 
 function MainLayout() {
   return (
-    <>
+    <div className="app-shell">
       <Header />
-      <main className="container">
+      <main>
         <Outlet />
       </main>
       <Footer />
-    </>
+    </div>
   );
 }
 
