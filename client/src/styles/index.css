@@ -292,6 +292,52 @@ a {
   grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
+.contact-layout-grid {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 20px;
+}
+
+.lead-form {
+  display: grid;
+  gap: 14px;
+  padding: 22px;
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  background: rgba(18, 24, 38, 0.95);
+  box-shadow: var(--shadow);
+}
+
+.lead-form label {
+  display: grid;
+  gap: 8px;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+.lead-form input,
+.lead-form select,
+.lead-form textarea {
+  width: 100%;
+  padding: 14px 16px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--text);
+  outline: none;
+}
+
+.lead-form input:focus,
+.lead-form select:focus,
+.lead-form textarea:focus {
+  border-color: rgba(255, 59, 48, 0.65);
+}
+
+.form-status {
+  margin: 0;
+  color: #ffd1cc;
+}
+
 .contact-card {
   padding: 20px;
 }
@@ -299,6 +345,52 @@ a {
 .contact-card strong {
   display: block;
   margin: 8px 0;
+}
+
+.workflow-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.workflow-card,
+.cta-banner {
+  border: 1px solid var(--line);
+  background: rgba(18, 24, 38, 0.9);
+  border-radius: 22px;
+  box-shadow: var(--shadow);
+}
+
+.workflow-card {
+  padding: 22px;
+}
+
+.workflow-card span {
+  display: inline-flex;
+  width: 52px;
+  height: 52px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 16px;
+  margin-bottom: 14px;
+  font-weight: 800;
+  background: rgba(255, 59, 48, 0.14);
+  color: #ff8a80;
+}
+
+.workflow-card p,
+.cta-banner p {
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+.cta-banner {
+  margin-top: 28px;
+  padding: 28px;
+  display: flex;
+  gap: 18px;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .footer {
@@ -311,7 +403,10 @@ a {
   .split,
   .cards-grid,
   .contact-panel,
-  .stats-grid {
+  .stats-grid,
+  .workflow-grid,
+  .cta-banner,
+  .contact-layout-grid {
     grid-template-columns: 1fr;
   }
 
@@ -322,5 +417,10 @@ a {
 
   .cards-grid.compact {
     grid-template-columns: 1fr;
+  }
+
+  .cta-banner {
+    flex-direction: column;
+    align-items: flex-start;
   }
 }
