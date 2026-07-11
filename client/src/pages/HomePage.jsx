@@ -44,6 +44,21 @@ const featureBullets = [
   "Nội dung rõ ràng, CTA nổi bật, dễ chuyển đổi"
 ];
 
+const templateCards = [
+  {
+    title: "Corporate Home",
+    text: "Trang giới thiệu doanh nghiệp với bố cục sạch và CTA rõ."
+  },
+  {
+    title: "Consulting Home",
+    text: "Khối nội dung giải pháp, dịch vụ và uy tín thương hiệu."
+  },
+  {
+    title: "Startup Agency",
+    text: "Tập trung chuyển đổi, phù hợp landing page và chiến dịch quảng cáo."
+  }
+];
+
 function HomePage() {
   const [content, setContent] = useState(fallbackContent);
   const [status, setStatus] = useState("Đang tải dữ liệu từ MongoDB...");
@@ -193,6 +208,16 @@ function HomePage() {
           Giao diện ưu tiên sự sáng sủa, nhấn đỏ đậm ở CTA, bố cục thoáng và nội dung bám đúng
           yêu cầu doanh nghiệp NNC.
         </p>
+      </section>
+
+      <section className="template-strip">
+        {templateCards.map((item) => (
+          <article key={item.title} className="template-card">
+            <span className="template-dot" />
+            <h3>{item.title}</h3>
+            <p>{item.text}</p>
+          </article>
+        ))}
       </section>
 
       <section className="stats-strip">

@@ -351,7 +351,43 @@ a {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 14px;
-  margin-top: 8px;
+  margin-top: 18px;
+}
+
+.template-strip {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: 18px;
+}
+
+.template-card {
+  padding: 22px 24px;
+  border-radius: 22px;
+  background: #fff;
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow);
+  text-align: left;
+}
+
+.template-dot {
+  display: inline-flex;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 0 8px rgba(239, 29, 18, 0.09);
+}
+
+.template-card h3 {
+  margin: 18px 0 10px;
+  font-size: 1.15rem;
+}
+
+.template-card p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.75;
 }
 
 .stat-chip {
@@ -380,6 +416,7 @@ a {
 
 .content-section-light {
   text-align: left;
+  border-top: 1px solid rgba(31, 42, 68, 0.04);
 }
 
 .section-head-center {
@@ -648,6 +685,7 @@ a {
   }
 
   .stats-strip,
+  .template-strip,
   .cards-grid-light,
   .cards-grid-projects,
   .workflow-grid,
