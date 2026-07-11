@@ -1,7 +1,10 @@
 function Footer() {
   return (
-    <footer className="footer">
-      <small>© 2026 Công Ty TNHH Công Nghệ Nam Nguyễn - NNC</small>
+    <footer className="site-footer">
+      <div className="site-footer-inner">
+        <strong>NNC</strong>
+        <span>Website thương mại và phần mềm cho doanh nghiệp</span>
+      </div>
     </footer>
   );
 }

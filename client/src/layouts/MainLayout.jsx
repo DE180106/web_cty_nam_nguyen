@@ -4,7 +4,7 @@ import Footer from "../components/Footer";
 
 function MainLayout() {
   return (
-    <div className="app-shell">
+    <div className="app-shell app-shell-light">
       <Header />
       <main>
         <Outlet />

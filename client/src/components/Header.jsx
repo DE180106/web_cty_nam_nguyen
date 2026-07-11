@@ -2,18 +2,22 @@ import { Link } from "react-router-dom";
 
 function Header() {
   return (
-    <header className="header">
-      <Link className="brand" to="/">
-        <strong>NNC</strong>
-        <span>Website thương mại và phần mềm cho doanh nghiệp</span>
-      </Link>
-      <nav className="nav" aria-label="Điều hướng chính">
-        <Link to="/gioi-thieu">Giới thiệu</Link>
-        <Link to="/dich-vu">Dịch vụ</Link>
-        <a href="#services">Dịch vụ</a>
-        <a href="#projects">Dự án</a>
-        <a href="#contact">Liên hệ</a>
-      </nav>
+    <header className="site-header">
+      <div className="site-header-inner">
+        <Link className="brand brand-dark" to="/">
+          <strong>NNC</strong>
+          <span>Business Solution</span>
+        </Link>
+        <nav className="nav nav-light" aria-label="Điều hướng chính">
+          <Link to="/">Start Tour</Link>
+          <Link to="/dich-vu">Demos</Link>
+          <Link to="/gioi-thieu">Features</Link>
+          <a href="#contact">Contact</a>
+        </nav>
+        <a className="purchase-btn" href="#contact">
+          Purchase Now
+        </a>
+      </div>
     </header>
   );
 }
