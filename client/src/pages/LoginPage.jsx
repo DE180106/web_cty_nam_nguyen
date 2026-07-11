@@ -11,7 +11,7 @@ function LoginPage() {
   const [submitting, setSubmitting] = useState(false);
   const [socialMessage, setSocialMessage] = useState("");
 
-  const defaultRedirect = user?.role === "admin" ? "/quan-tri/khach-hang" : "/tai-khoan";
+  const defaultRedirect = user?.role === "admin" ? "/quan-tri" : "/tai-khoan";
   const redirectTo = location.state?.from?.pathname || defaultRedirect;
 
   useEffect(() => {
@@ -29,7 +29,7 @@ function LoginPage() {
       const nextUser = await login(form);
       navigate(
         location.state?.from?.pathname ||
-          (nextUser.role === "admin" ? "/quan-tri/khach-hang" : "/tai-khoan"),
+          (nextUser.role === "admin" ? "/quan-tri" : "/tai-khoan"),
         { replace: true }
       );
     } catch (requestError) {

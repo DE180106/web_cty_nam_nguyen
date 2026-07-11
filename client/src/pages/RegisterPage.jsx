@@ -17,7 +17,7 @@ function RegisterPage() {
 
   useEffect(() => {
     if (isAuthenticated) {
-      navigate(user?.role === "admin" ? "/quan-tri/khach-hang" : "/tai-khoan", {
+      navigate(user?.role === "admin" ? "/quan-tri" : "/tai-khoan", {
         replace: true
       });
     }
@@ -30,7 +30,7 @@ function RegisterPage() {
 
     try {
       const nextUser = await register(form);
-      navigate(nextUser.role === "admin" ? "/quan-tri/khach-hang" : "/tai-khoan", {
+      navigate(nextUser.role === "admin" ? "/quan-tri" : "/tai-khoan", {
         replace: true
       });
     } catch (requestError) {

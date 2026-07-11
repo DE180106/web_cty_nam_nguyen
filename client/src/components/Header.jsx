@@ -31,7 +31,7 @@ function HeaderIcon({ children }) {
 function Header() {
   const { isAuthenticated, user, logout } = useAuth();
   const { totalItems } = useCart();
-  const dashboardPath = user?.role === "admin" ? "/quan-tri/khach-hang" : "/tai-khoan";
+  const dashboardPath = user?.role === "admin" ? "/quan-tri" : "/tai-khoan";
   const accountPath = isAuthenticated ? dashboardPath : "/dang-nhap";
 
   return (

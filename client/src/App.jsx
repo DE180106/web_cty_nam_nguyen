@@ -28,6 +28,14 @@ function App() {
         <Route path="/gio-hang" element={<CartPage />} />
         <Route path="/thanh-toan" element={<CheckoutPage />} />
         <Route
+          path="/quan-tri"
+          element={
+            <ProtectedRoute roles={["admin"]}>
+              <AdminLeadsPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
           path="/quan-tri/khach-hang"
           element={
             <ProtectedRoute roles={["admin"]}>

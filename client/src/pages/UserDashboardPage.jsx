@@ -1,7 +1,12 @@
+import { Navigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
 function UserDashboardPage() {
   const { user, logout } = useAuth();
+
+  if (user?.role === "admin") {
+    return <Navigate to="/quan-tri" replace />;
+  }
 
   return (
     <section className="auth-page">

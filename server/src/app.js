@@ -3,6 +3,7 @@ const cors = require("cors");
 
 const healthRoutes = require("./routes/health.routes");
 const authRoutes = require("./routes/auth.routes");
+const adminRoutes = require("./routes/admin.routes");
 const siteRoutes = require("./routes/site.routes");
 const productRoutes = require("./routes/product.routes");
 const leadRoutes = require("./routes/lead.routes");
@@ -24,6 +25,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use("/api/health", healthRoutes);
 app.use("/api/auth", authRoutes);
+app.use("/api/admin", adminRoutes);
 app.use("/api/site", siteRoutes);
 app.use("/api/products", productRoutes);
 app.use("/api/leads", leadRoutes);
